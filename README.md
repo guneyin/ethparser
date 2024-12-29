@@ -1,6 +1,7 @@
 
 # Ethereum Transaction Parser
 [![Go Coverage](https://github.com/guneyin/ethparser/wiki/coverage.svg)](https://raw.githack.com/wiki/guneyin/ethparser/coverage.html)
+[![Go Report Card](https://goreportcard.com/badge/github.com/guneyin/ethparser)](https://goreportcard.com/report/github.com/guneyin/ethparser)
 
 Parse Ethereum transactions by address
 
