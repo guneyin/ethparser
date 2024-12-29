@@ -25,14 +25,7 @@ func (m *Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	slog.Info("HTTP Request", "method", r.Method, "path", r.URL.Path, "duration", time.Since(s).Round(time.Millisecond).String())
 }
 
-func main() {
-	var port int
-	flag.IntVar(&port, "port", 8080, "http port to listen on")
-	flag.Parse()
-
-	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
-	slog.SetDefault(logger)
-
+func startServer(port int) error {
 	hnd := handler.New()
 
 	mux := http.NewServeMux()
@@ -42,5 +35,16 @@ func main() {
 	mw := NewMiddleware(mux)
 
 	log.Printf("server running on http://127.0.0.1:%d", port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), mw))
+	return http.ListenAndServe(fmt.Sprintf(":%d", port), mw)
+}
+
+func main() {
+	var port int
+	flag.IntVar(&port, "port", 8080, "http port to listen on")
+	flag.Parse()
+
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+	slog.SetDefault(logger)
+
+	log.Fatal(startServer(port))
 }
